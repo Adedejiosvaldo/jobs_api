@@ -17,11 +17,10 @@ const UserSchema = new mongoose.Schema({
     ],
     unique: true, //creates a unique index
   },
-
   password: {
     type: String,
     required: [true, "Please provide password"],
-    minlength: 6,
+    minlength: 4,
     maxlength: 12,
   },
 });
