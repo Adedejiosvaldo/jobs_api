@@ -5,7 +5,7 @@ import {
   getAllJobs,
   getJob,
   updateJob,
-} from "../controllers/jobs";
+} from "../controllers/jobs.js";
 const router = Router();
 
 router.route("/").get(getAllJobs).post(createJob);

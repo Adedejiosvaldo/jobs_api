@@ -1,6 +1,6 @@
-import CustomAPIError from "./custom-api";
-import NotFound from "./not-found";
-import BadRequest from "./bad-request";
-import NotAuthenticated from "./unauthenticated";
+import CustomAPIError from "./custom-api.js";
+import NotFound from "./not-found.js";
+import BadRequest from "./bad-request.js";
+import NotAuthenticated from "./unauthenticated.js";
 
 export { CustomAPIError, NotFound, BadRequest, NotAuthenticated };

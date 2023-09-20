@@ -1,12 +1,15 @@
 import { StatusCodes } from "http-status-codes";
-import User from "../models/User";
-import { BadRequest } from "../errors";
-
-import bcryptjs from "bcryptjs";
+import jwt from "jsonwebtoken";
+import User from "../models/User.js";
 
 const register = async (req, res) => {
+  console.log("token");
+  const id = "ddd";
+  const token = jwt.sign({ id: id }, "secret");
+  console.log(id);
   const user = await User.create({ ...req.body });
-  res.status(StatusCodes.CREATED).json(user);
+  console.log(token);
+  res.status(StatusCodes.CREATED).json(token);
 };
 
 const login = async (req, res) => {
