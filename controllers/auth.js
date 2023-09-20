@@ -3,13 +3,13 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
 const register = async (req, res) => {
-  console.log("token");
-  const id = "ddd";
-  const token = jwt.sign({ id: id }, "secret");
-  console.log(id);
   const user = await User.create({ ...req.body });
-  console.log(token);
-  res.status(StatusCodes.CREATED).json(token);
+  const token = jwt.sign({ id: user._id, name: user.name }, "jwtSecret", {
+    expiresIn: "30d",
+  });
+  res
+    .status(StatusCodes.CREATED)
+    .json({ user: { name: user.name, token: token } });
 };
 
 const login = async (req, res) => {
