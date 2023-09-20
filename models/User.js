@@ -29,8 +29,8 @@ UserSchema.pre("save", async function () {
   this.password = bcrypt.hash(this.password, salt);
 });
 
-UserSchema.methods.getName = function (params) {
-  res.send("Login user");
+UserSchema.methods.getName = function () {
+  return this.name;
 };
 
 export default mongoose.model("User", UserSchema);
