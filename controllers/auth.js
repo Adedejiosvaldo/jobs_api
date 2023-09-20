@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import jwt from "jsonwebtoken";
+
 import User from "../models/User.js";
 import { BadRequest, NotAuthenticated } from "../errors/index.js";
 const register = async (req, res) => {
@@ -16,12 +16,16 @@ const login = async (req, res) => {
   }
 
   const user = await User.findOne({ email });
-
   if (!user) {
     throw new NotAuthenticated("Invalid credentials");
   }
+  const token = await user.createJWT();
 
-  const token = user.createJWT();
+  const isPasswordCorrect = await user.comparePassword(password);
+
+  if (!isPasswordCorrect) {
+    throw new NotAuthenticated("Invalid credentials - Password");
+  }
   res.status(StatusCodes.OK).json({ user: { name: user.name }, token });
 };
 
