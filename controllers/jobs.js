@@ -10,7 +10,7 @@ const getAllJobs = async (req, res) => {
   if (!jobs) {
     throw new BadRequest("No Job exists");
   }
-  res.status(StatusCodes.OK).json({ jobs });
+  res.status(StatusCodes.OK).json({ jobs, count: jobs.length });
 };
 const getJob = async (req, res) => {
   const {
@@ -61,7 +61,22 @@ const updateJob = async (req, res) => {
   res.status(StatusCodes.OK).json({ updatedJob });
 };
 const deleteJob = async (req, res) => {
-  res.send("Deleted Job sucessfully");
+  const {
+    user: { userId },
+    params: { id: jobId },
+  } = req;
+
+  const deleteJob = await Job.findByIdAndDelete({
+    _id: jobId,
+    createdBy: userId,
+  });
+
+  if (!deleteJob) {
+    throw new BadRequest("Task does not exist");
+  }
+
+  res.status(StatusCodes.OK).json({ msg: "Deleted task sucessfully" });
+  //   res.send("Deleted Job sucessfully");
 };
 
 export { getAllJobs, getJob, createJob, updateJob, deleteJob };
