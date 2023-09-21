@@ -11,7 +11,7 @@ const authentificationMiddleWare = async (req, res, next) => {
   try {
     const payLoad = jwt.verify(token, process.env.JWT_SECRET);
     // attach user to job route
-    req.user = { userId: payLoad.userId, name: payLoad.name };
+    req.user = { userId: payLoad.id, name: payLoad.name };
     next(); //Passing this down
   } catch (err) {
     throw new NotAuthenticated("Invalid auth");
