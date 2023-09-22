@@ -15,7 +15,7 @@ const getAllJobs = async (req, res) => {
 const getJob = async (req, res) => {
   const {
     user: { userId },
-    params: { id: jobId },
+    params: { id: jobId }, 
   } = req;
 
   const job = await Job.findOne({
