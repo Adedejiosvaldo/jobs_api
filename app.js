@@ -18,16 +18,9 @@ import authentificationMiddleWare from "./middleware/authentication.js";
 
 const app = express();
 
-app.get("/", (req, res) => {
-  res.send("<h1>Homepage</h1>");
-});
-
-//routers
-app.use("/api/v1/jobs/", authentificationMiddleWare, jobsRouter);
-app.use("/api/v1/auth/", authRouter);
+app.use(express.json());
 
 // middleware
-app.use(express.json());
 // seccurity middleware
 app.set("trust proxy", 1);
 app.use(
@@ -43,8 +36,14 @@ app.use(xss());
 const port = process.env.PORT || 5000;
 
 //Main express app
-app.use(errorHandlerMiddleware);
-app.use(notFound);
+
+//routers
+app.use("/api/v1/jobs/", authentificationMiddleWare, jobsRouter);
+app.use("/api/v1/auth/", authRouter);
+
+app.get("/", (req, res) => {
+  res.send("<h1>Homepage</h1>");
+});
 
 const start = async () => {
   try {
@@ -56,5 +55,8 @@ const start = async () => {
     console.log(error);
   }
 };
+
+app.use(errorHandlerMiddleware);
+app.use(notFound);
 
 start();
