@@ -41,6 +41,11 @@ app.use(xss);
 const port = process.env.PORT || 5000;
 
 //Main express app
+
+app.get("/", (req, res) => {
+  res.send("<h1>Homepage</h1>");
+});
+
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URI);
