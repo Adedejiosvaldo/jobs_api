@@ -18,14 +18,16 @@ import authentificationMiddleWare from "./middleware/authentication.js";
 
 const app = express();
 
+app.get("/", (req, res) => {
+  res.send("<h1>Homepage</h1>");
+});
+
 //routers
 app.use("/api/v1/jobs/", authentificationMiddleWare, jobsRouter);
 app.use("/api/v1/auth/", authRouter);
 
 // middleware
 app.use(express.json());
-app.use(errorHandlerMiddleware);
-app.use(notFound);
 // seccurity middleware
 app.set("trust proxy", 1);
 app.use(
@@ -34,17 +36,15 @@ app.use(
     max: 100, //Limit each IP to 100 requests per windowMS
   })
 );
-app.use(helmet);
-app.use(cors);
-app.use(xss);
+app.use(helmet());
+app.use(cors());
+app.use(xss());
 
 const port = process.env.PORT || 5000;
 
 //Main express app
-
-app.get("/", (req, res) => {
-  res.send("<h1>Homepage</h1>");
-});
+app.use(errorHandlerMiddleware);
+app.use(notFound);
 
 const start = async () => {
   try {
