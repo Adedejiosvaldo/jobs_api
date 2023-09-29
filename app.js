@@ -48,7 +48,7 @@ app.use("/api/v1/auth/", authRouter);
 app.use("api-docs", SwaggerUI.serve, SwaggerUI.setup(swagerDocument));
 
 app.get("/", (req, res) => {
-  res.send('<h1>Jobs Api</h1><a href="/api-doc">Documentation</a>' );
+  res.send('<h1>Jobs Api</h1><a href="/api-docs">Documentation</a>');
 });
 
 const start = async () => {
